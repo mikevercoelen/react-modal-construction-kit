@@ -1,0 +1,12 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "standard",
+    "standard-react",
+    "plugin:jest/recommended"
+  ],
+  "env": {
+    "browser": true,
+    "mocha": true
+  }
+}
