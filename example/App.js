@@ -19,13 +19,40 @@ export default class App extends Component {
     })
   }
 
+  close = () => {
+    this.setState({ isModalVisible: false })
+  }
+
   render () {
     const { isModalVisible } = this.state
 
     return (
       <div>
         <Modal
-          header='Hello world'
+          btnCloseInner={(
+            <div>
+              X
+            </div>
+          )}
+          header={(
+            <h4>
+              Modal header
+            </h4>
+          )}
+          body={(
+            <div>
+              <p>
+                This is the amazing content of our Modal.
+              </p>
+            </div>
+          )}
+          footer={(
+            <div>
+              <button onClick={this.close}>
+                Close
+              </button>
+            </div>
+          )}
           onClosed={this.onModalClosed}
           isOpen={isModalVisible} />
         <Overlay
