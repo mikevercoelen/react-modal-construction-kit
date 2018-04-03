@@ -15,7 +15,7 @@ import {
 
 const styles = {
   component: 'rmck-modal',
-  dialog: 'rmck-modal_dialog',
+  dialog: 'rmck-modal__dialog',
   modalOpen: 'rmck-modal-open', // no bem (this class @ body when modal is open)
   modalContent: 'rmck-modal__content',
   header: 'rmck-modal__header',
@@ -69,6 +69,7 @@ const defaultProps = {
   zIndex: 1050,
   fade: true,
   onOpened: noop,
+  isRequired: false,
   onClosed: noop,
   modalTransition: {
     timeout: 300
@@ -108,7 +109,7 @@ class Modal extends React.Component {
       this.setFocus()
     }
 
-    this.isMounted = true
+    this._isMounted = true
   }
 
   componentWillReceiveProps (nextProps) {
@@ -138,7 +139,7 @@ class Modal extends React.Component {
       this.destroy()
     }
 
-    this.isMounted = false
+    this._isMounted = false
   }
 
   onOpened = (node, isAppearing) => {
@@ -152,7 +153,7 @@ class Modal extends React.Component {
     (this.props.modalTransition.onExited || noop)(node)
     this.destroy()
 
-    if (this.isMounted) {
+    if (this._isMounted) {
       this.setState({ isOpen: false })
     }
   }
@@ -236,7 +237,7 @@ class Modal extends React.Component {
           this.dialog = c
         }}
       >
-        <divs
+        <div
           className={mapToCssModules(
             classNames('modal-content', contentClassName),
             cssModule
@@ -266,7 +267,7 @@ class Modal extends React.Component {
               {footer}
             </div>
           )}
-        </divs>
+        </div>
       </div>
     )
   }

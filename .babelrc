@@ -2,7 +2,7 @@
   "presets": [
     "es2015-no-commonjs",
     "react",
-    "stage-2"
+    "stage-0"
   ],
   "env": {
     "development": {

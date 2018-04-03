@@ -1,7 +1,9 @@
 const webpack = require('webpack')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const env = process.env.NODE_ENV
+const isExample = env === 'example'
 
 const reactExternal = {
   root: 'React',
@@ -60,6 +62,25 @@ const config = {
       'process.env.NODE_ENV': JSON.stringify(env)
     })
   ]
+}
+
+if (isExample) {
+  config.entry = './example/index.js'
+  config.plugins.push(new HtmlWebpackPlugin({
+    template: './example/index.html'
+  }))
+  config.mode = 'development'
+  delete config.externals
+  config.module.rules.push({
+    test: /\.scss$/,
+    use: [{
+      loader: "style-loader" // creates style nodes from JS strings
+    }, {
+      loader: "css-loader" // translates CSS into CommonJS
+    }, {
+      loader: "sass-loader" // compiles Sass to CSS
+    }]
+  })
 }
 
 module.exports = config
