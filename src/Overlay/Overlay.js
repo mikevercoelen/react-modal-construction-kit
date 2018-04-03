@@ -11,7 +11,7 @@ const getDefaultStyle = transitionDuration => ({
   left: 0,
   backgroundColor: 'black',
   willChange: 'opacity',
-  transition: `opacity ${transitionDuration}ms linear`
+  transition: `opacity ${transitionDuration}ms ease-in-out`
 })
 
 export const getTransitionStyles = opacity => ({
@@ -67,7 +67,7 @@ Overlay.propTypes = {
 Overlay.defaultProps = {
   transitionDuration: 150,
   zIndex: 500,
-  opacity: 0.4
+  opacity: 0.7
 }
 
 export default Overlay
