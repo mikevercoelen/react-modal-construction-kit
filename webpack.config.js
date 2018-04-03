@@ -33,6 +33,13 @@ const classNamesExternal = {
   amd: 'classnames'
 }
 
+const transitionGroupExternal = {
+  root: 'ReactTransitionGroup',
+  commonjs2: 'react-transition-group',
+  commonjs: 'react-transition-group',
+  amd: 'react-transition-group'
+}
+
 const rules = []
 
 rules.push({
@@ -47,7 +54,8 @@ const config = {
     'react': reactExternal,
     'react-dom': reactDOMExternall,
     'prop-types': propTypesExternal,
-    'classnames': classNamesExternal
+    'classnames': classNamesExternal,
+    'react-transition-group': transitionGroupExternal
   },
   module: {
     rules
