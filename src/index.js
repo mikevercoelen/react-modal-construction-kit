@@ -1,7 +1,9 @@
-function Modal () {
-  console.log('hello')
-}
+import Modal from './Modal/Modal'
+import Overlay from './Overlay/Overlay'
+import Portal from './Portal/Portal'
 
 export {
-  Modal
+  Modal,
+  Overlay,
+  Portal
 }

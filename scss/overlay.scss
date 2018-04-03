@@ -1,0 +1,30 @@
+$visible-opacity: .8;
+$background-color: black;
+
+.rmck-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 800;
+  background-color: $background-color;
+  will-change: opacity;
+  transition: opacity 120ms linear;
+
+  &--exited {
+    display: none;
+  }
+
+  &--entering {
+    opacity: 0.01;
+  }
+
+  &--entered {
+    opacity: $visible-opacity;
+  }
+
+  &--exiting {
+    opacity: 0.01;
+  }
+}

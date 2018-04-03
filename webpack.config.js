@@ -24,6 +24,13 @@ const propTypesExternal = {
   amd: 'prop-types'
 }
 
+const classNamesExternal = {
+  root: 'classnames',
+  commonjs2: 'classnames',
+  commonjs: 'classnames',
+  amd: 'classnames'
+}
+
 const rules = []
 
 rules.push({
@@ -35,9 +42,10 @@ rules.push({
 const config = {
   mode: env,
   externals: {
-    react: reactExternal,
+    'react': reactExternal,
     'react-dom': reactDOMExternall,
-    'prop-types': propTypesExternal
+    'prop-types': propTypesExternal,
+    'classnames': classNamesExternal
   },
   module: {
     rules
