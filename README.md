@@ -7,7 +7,7 @@ A high quality Modal and Overlay component, fully animated and customizable. No 
 
 ## Demo & Examples
 
-Live demo: [jedwatson.github.io/react-select](http://jedwatson.github.io/react-select/)
+Live demo: [mikevercoelen.github.io/react-modal-construction-kit](http://mikevercoelen.github.io/react-modal-construction-kit/)
 
 ## Installation
 

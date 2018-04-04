@@ -1,3 +1,4 @@
+const path = require('path')
 const webpack = require('webpack')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -18,6 +19,9 @@ const config = {
   entry: './index.js',
   module: {
     rules
+  },
+  output: {
+    path: path.resolve(__dirname, '../dist-examples')
   },
   plugins: [
     new LodashModuleReplacementPlugin(),
