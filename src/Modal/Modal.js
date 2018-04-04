@@ -31,7 +31,7 @@ export const getTransitionStyles = () => ({
 const getStyle = ({
   zIndex,
   isCentered,
-  transition
+  transitionDuration
 }) => ({
   component: {
     overflowX: 'hidden',
@@ -43,7 +43,7 @@ const getStyle = ({
     left: 0,
     zIndex,
     outline: 0,
-    transition: `opacity ${transition.duration / 2}ms linear, transform ${transition.duration}ms ease-out`
+    transition: `opacity ${transitionDuration / 2}ms linear, transform ${transitionDuration}ms ease-out`
   },
   dialog: {
     display: 'flex',
@@ -72,43 +72,42 @@ const getStyle = ({
   }
 })
 
-const propTypes = {
-  isOpen: PropTypes.bool,
-  autoFocus: PropTypes.bool,
-  isRequired: PropTypes.bool,
-  role: PropTypes.string,
-  onEnter: PropTypes.func,
-  onExit: PropTypes.func,
-  onOpened: PropTypes.func,
-  onClosed: PropTypes.func,
-  zIndex: PropTypes.number,
-  onClickOutside: PropTypes.func,
-  children: PropTypes.node.isRequired,
-  transition: PropTypes.shape({
-    duration: 300,
+export default class Modal extends React.Component {
+  static propTypes = {
+    isOpen: PropTypes.bool,
+    autoFocus: PropTypes.bool,
+    isRequired: PropTypes.bool,
+    role: PropTypes.string,
+    onEnter: PropTypes.func,
+    onExit: PropTypes.func,
+    onOpened: PropTypes.func,
+    onClosed: PropTypes.func,
+    zIndex: PropTypes.number,
+    onClickOutside: PropTypes.func,
+    children: PropTypes.node.isRequired,
     onEntered: PropTypes.func,
-    onExited: PropTypes.func
-  })
-}
+    onExited: PropTypes.func,
+    transitionDuration: PropTypes.number,
+    className: PropTypes.string,
+    dialogClassName: PropTypes.string,
+    contentClassName: PropTypes.string
+  }
 
-const defaultProps = {
-  isOpen: false,
-  autoFocus: true,
-  role: 'dialog',
-  zIndex: 750,
-  onOpened: noop,
-  isRequired: false,
-  onClosed: noop,
-  onClickOutside: noop,
-  transition: {
-    duration: 300,
+  static defaultProps = {
+    isOpen: false,
+    autoFocus: true,
+    role: 'dialog',
+    zIndex: 750,
+    onOpened: noop,
+    isRequired: false,
+    onClosed: noop,
+    onClickOutside: noop,
+    transitionDuration: 300,
+    onEntered: noop,
     onExited: noop,
-    onEntered: noop
-  },
-  isCentered: true
-}
+    isCentered: true
+  }
 
-class Modal extends React.Component {
   constructor (props) {
     super(props)
 
@@ -169,21 +168,21 @@ class Modal extends React.Component {
   onOpened = (node, isAppearing) => {
     const {
       onOpened,
-      transition
+      onEntered
     } = this.props
 
     onOpened()
-    transition.onEntered(node, isAppearing)
+    onEntered(node, isAppearing)
   }
 
   onClosed = (node) => {
     const {
       onClosed,
-      transition
+      onExited
     } = this.props
 
     onClosed()
-    transition.onExited(node)
+    onExited(node)
     this.destroy()
 
     if (this._isMounted) {
@@ -192,8 +191,8 @@ class Modal extends React.Component {
   }
 
   setFocus () {
-    if (this.dialog && this.dialog.parentNode && typeof this.dialog.parentNode.focus === 'function') {
-      this.dialog.parentNode.focus()
+    if (this.dialogRef && this.dialogRef.parentNode && typeof this.dialogRef.parentNode.focus === 'function') {
+      this.dialogRef.parentNode.focus()
     }
   }
 
@@ -236,27 +235,8 @@ class Modal extends React.Component {
     setScrollbarWidth(this.originalBodyPadding)
   }
 
-  renderModalDialog = (style) => {
-    return (
-      <div
-        style={style.dialog}
-        role='document'
-        ref={(c) => {
-          this.dialog = c
-        }}>
-        <div
-          ref={c => {
-            this.content = c
-          }}
-          style={style.content}>
-          {this.props.children}
-        </div>
-      </div>
-    )
-  }
-
   handleClick = (e) => {
-    const hasClickedOutside = !this.content.contains(e.target)
+    const hasClickedOutside = !this.contentRef.contains(e.target)
     hasClickedOutside && this.props.onClickOutside()
   }
 
@@ -268,7 +248,11 @@ class Modal extends React.Component {
     const {
       isOpen,
       role,
-      transition
+      transitionDuration,
+      children,
+      className,
+      dialogClassName,
+      contentClassName
     } = this.props
 
     const style = getStyle(this.props)
@@ -279,7 +263,7 @@ class Modal extends React.Component {
           appear
           onEntered={this.onOpened}
           onExited={this.onClosed}
-          timeout={transition.duration}
+          timeout={transitionDuration}
           in={isOpen}>
           {state => (
             <div
@@ -287,11 +271,27 @@ class Modal extends React.Component {
               tabIndex='-1'
               role={role}
               onKeyUp={this.handleEscape}
+              className={className}
               style={{
                 ...style.component,
                 ...getTransitionStyles()[state]
               }}>
-              {this.renderModalDialog(style)}
+              <div
+                className={dialogClassName}
+                style={style.dialog}
+                role='document'
+                ref={(c) => {
+                  this.dialogRef = c
+                }}>
+                <div
+                  className={contentClassName}
+                  ref={c => {
+                    this.contentRef = c
+                  }}
+                  style={style.content}>
+                  {children}
+                </div>
+              </div>
             </div>
           )}
         </Transition>
@@ -299,8 +299,3 @@ class Modal extends React.Component {
     )
   }
 }
-
-Modal.propTypes = propTypes
-Modal.defaultProps = defaultProps
-
-export default Modal
