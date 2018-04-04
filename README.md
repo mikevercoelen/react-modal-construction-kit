@@ -50,6 +50,7 @@ export default class App extends Component {
     return (
       <div>
         <Modal
+          onClickOutside={this.close}
           closeButton={(onClosed) => (
             <button onClick={onClosed}>
               Close it
@@ -103,6 +104,7 @@ The modal component is a fully customizable modal, requires no styling and is al
 | `footer` | React Node | undefined | The footer of the modal |
 | `closeButton` | function(onClosed) | undefined | If you want a custom close button with your own icon, use this function and return your custom component |
 | `onOpened` | function | undefined | Called on when the Transitions triggers 'onOpened' |
+| `onClickOutside` | function | undefined | Called when the user clicks outside the modal |
 | `onClosed` | function | undefined | Called on when the Transitions triggers 'onClosed' |
 | `onEnter` | function | undefined | Called on `componentDidMount` |
 | `onExit` | function | undefined | Called on `componentWillUnmount` | 
@@ -131,6 +133,7 @@ import { Overlay } from 'react-modal-construction-kit'
 | `transitionDuration` | number | 150 | The duration of the transition |
 | `opacity` | number | 0.7 | The opacity value when the overlay is fully visible |
 | `backgroundColor` | string | `"black"` | The background color |
+| `onClick` | function(event) | undefined | onClick handler, when using a modal you don't need this, use `Modal.onClickOutside` |
 
 # License
 

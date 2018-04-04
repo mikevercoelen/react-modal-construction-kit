@@ -132,6 +132,7 @@ const propTypes = {
   footer: PropTypes.node,
   closeButton: PropTypes.func,
   zIndex: PropTypes.number,
+  onClickOutside: PropTypes.func,
   transition: PropTypes.shape({
     duration: 300,
     onEntered: PropTypes.func,
@@ -156,6 +157,7 @@ const defaultProps = {
   onOpened: noop,
   isRequired: false,
   onClosed: noop,
+  onClickOutside: noop,
   transition: {
     duration: 300,
     onExited: noop,
@@ -315,7 +317,11 @@ class Modal extends React.Component {
         ref={(c) => {
           this.dialog = c
         }}>
-        <div style={style.content}>
+        <div
+          ref={c => {
+            this.content = c
+          }}
+          style={style.content}>
           <div style={style.header}>
             <div style={style.headerContent}>
               {header}
@@ -341,6 +347,11 @@ class Modal extends React.Component {
     )
   }
 
+  handleClick = (e) => {
+    const hasClickedOutside = !this.content.contains(e.target)
+    hasClickedOutside && this.props.onClickOutside()
+  }
+
   render () {
     if (!this.state.isOpen) {
       return null
@@ -364,6 +375,7 @@ class Modal extends React.Component {
           in={isOpen}>
           {state => (
             <div
+              onClick={this.handleClick}
               tabIndex='-1'
               role={role}
               onKeyUp={this.handleEscape}

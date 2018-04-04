@@ -34,7 +34,8 @@ const Overlay = ({
   zIndex,
   transitionDuration,
   opacity,
-  backgroundColor
+  backgroundColor,
+  onClick
 }) => {
   const style = {
     ...getDefaultStyle(transitionDuration, backgroundColor),
@@ -48,6 +49,7 @@ const Overlay = ({
         timeout={transitionDuration}>
         {state => (
           <div
+            onClick={onClick}
             style={{
               ...style,
               ...getTransitionStyles(opacity)[state]
@@ -63,7 +65,8 @@ Overlay.propTypes = {
   transitionDuration: PropTypes.number,
   zIndex: PropTypes.number,
   opacity: PropTypes.number,
-  backgroundColor: PropTypes.string
+  backgroundColor: PropTypes.string,
+  onClick: PropTypes.func
 }
 
 Overlay.defaultProps = {

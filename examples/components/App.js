@@ -28,6 +28,7 @@ export default class App extends Component {
     return (
       <div>
         <Modal
+          onClickOutside={this.close}
           closeButton={(onClosed) => (
             <button onClick={onClosed}>
               Close it
