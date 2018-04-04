@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Modal, Overlay } from '../../src/index'
+import '../index.scss'
 
 export default class App extends Component {
   state = {
@@ -28,33 +29,25 @@ export default class App extends Component {
     return (
       <div>
         <Modal
+          isCentered={false}
+          className='modal'
+          dialogClassName='modal__dialog'
+          contentClassName='modal__content'
           onClickOutside={this.close}
-          closeButton={(onClosed) => (
-            <button onClick={onClosed}>
-              Close it
-            </button>
-          )}
-          header={(
-            <h4>
-              Modal header
-            </h4>
-          )}
-          body={(
-            <div>
-              <p>
-                This is the amazing content of our Modal.
-              </p>
-            </div>
-          )}
-          footer={(
-            <div>
-              <button onClick={this.close}>
-                Close
-              </button>
-            </div>
-          )}
           onClosed={this.onModalClosed}
-          isOpen={isModalVisible} />
+          isOpen={isModalVisible}>
+          <div className='modal__header'>
+            Header
+          </div>
+          <div className='modal__body'>
+            A super minimal Modal
+          </div>
+          <div className='modal__footer'>
+            <button onClick={this.close}>
+              Close
+            </button>
+          </div>
+        </Modal>
         <Overlay
           isVisible={isModalVisible} />
         <button

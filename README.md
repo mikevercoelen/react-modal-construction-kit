@@ -1,15 +1,17 @@
 [![NPM](https://img.shields.io/npm/v/react-modal-construction-kit.svg)](https://www.npmjs.com/package/react-modal-construction-kit)
 
-React-Modal-Construction-Kit
+React Modal Construction Kit
 ============
 
-A high quality Modal and Overlay component, fully animated and customizable. No styling required ;) Its rendered by using React 16's `createPortal`.
+A highly extensible Modal library. 
+
+* `Modal`
+* `Overlay`
+* `Portal`
 
 ## Demo
 
-**NOTE**: It's ugly, yes (because it's fully customizable)
-
-Demo: [mikevercoelen.github.io/react-modal-construction-kit](http://mikevercoelen.github.io/react-modal-construction-kit/)
+[mikevercoelen.github.io/react-modal-construction-kit](http://mikevercoelen.github.io/react-modal-construction-kit/)
 
 ## Installation
 
@@ -34,12 +36,6 @@ export default class App extends Component {
     })
   }
 
-  onModalClosed = () => {
-    this.setState({
-      isModalVisible: false
-    })
-  }
-
   close = () => {
     this.setState({ isModalVisible: false })
   }
@@ -51,32 +47,12 @@ export default class App extends Component {
       <div>
         <Modal
           onClickOutside={this.close}
-          closeButton={(onClosed) => (
-            <button onClick={onClosed}>
-              Close it
-            </button>
-          )}
-          header={(
-            <h4>
-              Modal header
-            </h4>
-          )}
-          body={(
-            <div>
-              <p>
-                This is the amazing content of our Modal.
-              </p>
-            </div>
-          )}
-          footer={(
-            <div>
-              <button onClick={this.close}>
-                Close
-              </button>
-            </div>
-          )}
-          onClosed={this.onModalClosed}
-          isOpen={isModalVisible} />
+          onClosed={this.close}
+          isOpen={isModalVisible}>
+          <p>
+            A super minimal Modal
+          </p>
+        </Modal>
         <Overlay
           isVisible={isModalVisible} />
         <button
@@ -99,25 +75,18 @@ The modal component is a fully customizable modal, requires no styling and is al
 | `autoFocus` | boolean | undefined | autofocus the component on mount |
 | `zIndex` | number | 750 | z-index value |
 | `role` | string | `"dialog"` | HTML5 `role` |
-| `body` | React Node | undefined | The body of the modal |
-| `header` | React Node | undefined | The header of the modal |
-| `footer` | React Node | undefined | The footer of the modal |
-| `closeButton` | function(onClosed) | undefined | If you want a custom close button with your own icon, use this function and return your custom component |
+| `children` | React Node | undefined | The content of the modal |
 | `onOpened` | function | undefined | Called on when the Transitions triggers 'onOpened' |
 | `onClickOutside` | function | undefined | Called when the user clicks outside the modal |
 | `onClosed` | function | undefined | Called on when the Transitions triggers 'onClosed' |
 | `onEnter` | function | undefined | Called on `componentDidMount` |
 | `onExit` | function | undefined | Called on `componentWillUnmount` | 
-| `transition` | object | undefined | Configuration object for the transition |
-| `transition.duration` | number | 300 | Duration of the animation |
-| `transition.onEntered` | function(node, isAppearing) | undefined | - |
-| `transition.onExited` | function(node) | undefined | - |
-| `styling` | object | default styles | If you want to customize the look and feel, you need to change the values in this object |
-| `styling.borderRadius` | number | 0 | Border radius |
-| `styling.borderColor` | string | `"#fafafa"` | The color of the border, that divides the content, footer and header |
-| `styling.maxWidth` | number | 500 | Max width of the dialog |
-| `styling.isCentered` | boolean | true | Set to false if you don't want the modal to be centered by default |
-| `styling.backgroundColor` | string | `"white"` | Set the background color of the dialog |
+| `transitionDurationo` | number | 300 | Duration of the animation |
+| `onEntered` | function(node, isAppearing) | undefined | - |
+| `onExited` | function(node) | undefined | - |
+| `className` | string | undefined | Adds a class names to component root |
+| `dialogClassName` | string | undefined | Adds a class name to dialog |
+| `contentClassName` | string | undefined | Adds a class name to content |
 
 ## Overlay
 The Modal component does not have an overlay by default, the reason for this is: what if you have multiple modals open? You should only have ONE overlay. It's animated and also requires no styling, it just works ;)

@@ -24,13 +24,6 @@ const propTypesExternal = {
   amd: 'prop-types'
 }
 
-const classNamesExternal = {
-  root: 'classnames',
-  commonjs2: 'classnames',
-  commonjs: 'classnames',
-  amd: 'classnames'
-}
-
 const transitionGroupExternal = {
   root: 'ReactTransitionGroup',
   commonjs2: 'react-transition-group',
@@ -52,7 +45,6 @@ const config = {
     'react': reactExternal,
     'react-dom': reactDOMExternall,
     'prop-types': propTypesExternal,
-    'classnames': classNamesExternal,
     'react-transition-group': transitionGroupExternal
   },
   module: {

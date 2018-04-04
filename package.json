@@ -1,6 +1,6 @@
 {
   "name": "react-modal-construction-kit",
-  "version": "1.0.5",
+  "version": "2.0.1",
   "description": "A flexible Modal component kit for React",
   "main": "./lib/index.js",
   "module": "./es/index.js",
@@ -69,7 +69,6 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
-    "classnames": "^2.2.5",
     "codecov.io": "^0.1.6",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
@@ -102,7 +101,7 @@
     "stringstream": "^0.0.5",
     "style-loader": "^0.20.3",
     "tmp": "0.0.33",
-    "webpack": "^4.4.1",
+    "webpack": "^4.5.0",
     "webpack-bundle-analyzer": "^2.11.1",
     "webpack-cli": "^2.0.13",
     "webpack-dev-server": "^3.1.1"
@@ -110,8 +109,7 @@
   "peerDependencies": {
     "react": "^15.0.0-0 || ^16.0.0-0",
     "react-dom": "^15.0.0-0 || ^16.0.0-0",
-    "react-transition-group": "^2.3.0",
-    "classnames": "^2.2.0"
+    "react-transition-group": "^2.3.0"
   },
   "files": [
     "README.md",
