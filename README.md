@@ -71,22 +71,22 @@ The modal component is a fully customizable modal, requires no styling and is al
 | Property | Type | Default | Description |
 |:---|:---|:---|:---|
 | `isOpen` | boolean | false | Open or close modal's state |
-| `isRequired` | boolean | false | If enabled, the Modal's close button will not show and keyDown @ `escape` will not close the modal |
-| `autoFocus` | boolean | undefined | autofocus the component on mount |
+| `isRequired` | boolean | false | If enabled, `escape` keydown will not trigger close, and `onClickOutside` will not trigger. Use this if the Modal is "important". |
+| `autoFocus` | boolean | - | autofocus the component on mount |
 | `zIndex` | number | 750 | z-index value |
 | `role` | string | `"dialog"` | HTML5 `role` |
-| `children` | React Node | undefined | The content of the modal |
-| `onOpened` | function | undefined | Called on when the Transitions triggers 'onOpened' |
-| `onClickOutside` | function | undefined | Called when the user clicks outside the modal |
-| `onClosed` | function | undefined | Called on when the Transitions triggers 'onClosed' |
-| `onEnter` | function | undefined | Called on `componentDidMount` |
-| `onExit` | function | undefined | Called on `componentWillUnmount` | 
-| `transitionDurationo` | number | 300 | Duration of the animation |
-| `onEntered` | function(node, isAppearing) | undefined | - |
-| `onExited` | function(node) | undefined | - |
-| `className` | string | undefined | Adds a class names to component root |
-| `dialogClassName` | string | undefined | Adds a class name to dialog |
-| `contentClassName` | string | undefined | Adds a class name to content |
+| `children` | React Node | - | The content of the modal |
+| `onOpened` | function | - | Called on when the Transitions triggers 'onOpened' |
+| `onClickOutside` | function() | - | Called when the user clicks outside the modal |
+| `onClosed` | function | - | Called on when the Transitions triggers 'onClosed' |
+| `onEnter` | function | - | Called on `componentDidMount` |
+| `onExit` | function | - | Called on `componentWillUnmount` | 
+| `transitionDuration` | number | 300 | Duration of the animation |
+| `onEntered` | function(node, isAppearing) | - | - |
+| `onExited` | function(node) | - | - |
+| `className` | string | - | Adds a class names to component root |
+| `dialogClassName` | string | - | Adds a class name to dialog |
+| `contentClassName` | string | - | Adds a class name to content |
 
 ## Overlay
 The Modal component does not have an overlay by default, the reason for this is: what if you have multiple modals open? You should only have ONE overlay. It's animated and also requires no styling, it just works ;)
@@ -102,7 +102,7 @@ import { Overlay } from 'react-modal-construction-kit'
 | `transitionDuration` | number | 150 | The duration of the transition |
 | `opacity` | number | 0.7 | The opacity value when the overlay is fully visible |
 | `backgroundColor` | string | `"black"` | The background color |
-| `onClick` | function(event) | undefined | onClick handler, when using a modal you don't need this, use `Modal.onClickOutside` |
+| `onClick` | function(event) | - | onClick handler, when using a modal you don't need this, use `Modal.onClickOutside` |
 
 # License
 
