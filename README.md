@@ -5,20 +5,91 @@ React-Modal-Construction-Kit
 
 A high quality Modal and Overlay component, fully animated and customizable. No styling required ;)
 
-## Demo & Examples
+## Demo
+
+**NOTE**: It's ugly, yes (because it's fully customizable)
 
 Live demo: [mikevercoelen.github.io/react-modal-construction-kit](http://mikevercoelen.github.io/react-modal-construction-kit/)
 
 ## Installation
 
-```js
+```shell
 npm install react-modal-construction-kit --save
 ```
 
-## Modal
+## Example
 
 ```js
-import { Modal } from 'react-modal-construction-kit'
+import React, { Component } from 'react'
+import { Modal, Overlay } from '../../src/index'
+
+export default class App extends Component {
+  state = {
+    isModalVisible: false
+  }
+
+  onBtnOpenModalClick = () => {
+    this.setState({
+      isModalVisible: true
+    })
+  }
+
+  onModalClosed = () => {
+    this.setState({
+      isModalVisible: false
+    })
+  }
+
+  close = () => {
+    this.setState({ isModalVisible: false })
+  }
+
+  render () {
+    const { isModalVisible } = this.state
+
+    return (
+      <div>
+        <Modal
+          closeButton={(onClosed) => (
+            <button onClick={onClosed}>
+              Close it
+            </button>
+          )}
+          header={(
+            <h4>
+              Modal header
+            </h4>
+          )}
+          body={(
+            <div>
+              <p>
+                This is the amazing content of our Modal.
+              </p>
+            </div>
+          )}
+          footer={(
+            <div>
+              <button onClick={this.close}>
+                Close
+              </button>
+            </div>
+          )}
+          onClosed={this.onModalClosed}
+          isOpen={isModalVisible} />
+        <Overlay
+          isVisible={isModalVisible} />
+        <button
+          onClick={this.onBtnOpenModalClick}>
+          Open modal
+        </button>
+      </div>
+    )
+  }
+}
+```
+
+## Modal
+The modal component is a fully customizable modal, requires no styling and is already animated out of the box.
 ```
 
 | Property | Type | Default | Description |
@@ -41,13 +112,14 @@ import { Modal } from 'react-modal-construction-kit'
 | `transition.onEntered` | function(node, isAppearing) | undefined | - |
 | `transition.onExited` | function(node) | undefined | - |
 | `styling` | object | default styles | If you want to customize the look and feel, you need to change the values in this object |
-| `style.borderRadius` | number | 0 | Border radius |
-| `style.borderColor` | string | #fafafa | The color of the border, that devides the content, footer and header |
-| `style.maxWidth` | number | 500 | Max width of the dialog |
-| `style.isCentered` | boolean | true | Set to false if you don't want the modal to be centered by default |
-| `style.backgroundColor` | string | white | Set the background color of the dialog |
+| `styling.borderRadius` | number | 0 | Border radius |
+| `styling.borderColor` | string | #fafafa | The color of the border, that devides the content, footer and header |
+| `styling.maxWidth` | number | 500 | Max width of the dialog |
+| `styling.isCentered` | boolean | true | Set to false if you don't want the modal to be centered by default |
+| `styling.backgroundColor` | string | white | Set the background color of the dialog |
 
 ## Overlay
+The Modal component does not have an overlay by default, the reason for this is: what if you have multiple modals open? You should only have ONE overlay. It's animated and also requires no styling, it just works ;)
 
 ```js
 import { Overlay } from 'react-modal-construction-kit'
