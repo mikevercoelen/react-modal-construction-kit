@@ -3,7 +3,7 @@
 React-Modal-Construction-Kit
 ============
 
-A high quality Modal and Overlay component, fully animated and customizable. No styling required ;)
+A high quality Modal and Overlay component, fully animated and customizable. No styling required ;) Its rendered by using React 16's `createPortal`.
 
 ## Demo
 
@@ -21,7 +21,7 @@ npm install react-modal-construction-kit --save
 
 ```js
 import React, { Component } from 'react'
-import { Modal, Overlay } from '../../src/index'
+import { Modal, Overlay } from 'react-modal-construction-kit'
 
 export default class App extends Component {
   state = {
