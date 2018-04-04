@@ -90,7 +90,6 @@ export default class App extends Component {
 
 ## Modal
 The modal component is a fully customizable modal, requires no styling and is already animated out of the box.
-```
 
 | Property | Type | Default | Description |
 |:---|:---|:---|:---|
