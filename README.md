@@ -112,7 +112,7 @@ The modal component is a fully customizable modal, requires no styling and is al
 | `transition.onExited` | function(node) | undefined | - |
 | `styling` | object | default styles | If you want to customize the look and feel, you need to change the values in this object |
 | `styling.borderRadius` | number | 0 | Border radius |
-| `styling.borderColor` | string | `"#fafafa"` | The color of the border, that devides the content, footer and header |
+| `styling.borderColor` | string | `"#fafafa"` | The color of the border, that divides the content, footer and header |
 | `styling.maxWidth` | number | 500 | Max width of the dialog |
 | `styling.isCentered` | boolean | true | Set to false if you don't want the modal to be centered by default |
 | `styling.backgroundColor` | string | `"white"` | Set the background color of the dialog |
