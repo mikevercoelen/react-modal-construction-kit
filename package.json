@@ -21,7 +21,6 @@
     "clean": "rimraf dist lib es dist-examples",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "prepush": "npm run deploy",
     "precommit": "lint-staged",
     "prepublishOnly": "npm run lint:fix && npm run test:cov && npm run clean && npm run build && npm run deploy",
     "test": "cross-env NODE_ENV=test jest --runInBand",
