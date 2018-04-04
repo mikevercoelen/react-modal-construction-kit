@@ -29,32 +29,12 @@ export default class App extends Component {
       <div>
         <Modal
           onClickOutside={this.close}
-          closeButton={(onClosed) => (
-            <button onClick={onClosed}>
-              Close it
-            </button>
-          )}
-          header={(
-            <h4>
-              Modal header
-            </h4>
-          )}
-          body={(
-            <div>
-              <p>
-                This is the amazing content of our Modal.
-              </p>
-            </div>
-          )}
-          footer={(
-            <div>
-              <button onClick={this.close}>
-                Close
-              </button>
-            </div>
-          )}
           onClosed={this.onModalClosed}
-          isOpen={isModalVisible} />
+          isOpen={isModalVisible}>
+          <div>
+            A super minimal Modal
+          </div>
+        </Modal>
         <Overlay
           isVisible={isModalVisible} />
         <button

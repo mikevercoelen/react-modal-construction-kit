@@ -31,13 +31,7 @@ export const getTransitionStyles = () => ({
 const getStyle = ({
   zIndex,
   isCentered,
-  transition,
-  styling: {
-    borderRadius,
-    borderColor,
-    maxWidth,
-    backgroundColor
-  }
+  transition
 }) => ({
   component: {
     overflowX: 'hidden',
@@ -55,7 +49,7 @@ const getStyle = ({
     display: 'flex',
     alignItems: 'center',
     position: 'relative',
-    maxWidth: `${maxWidth}px`,
+    maxWidth: `500px`,
     margin: (isCentered ? '0 auto' : '1.75rem auto'),
     minHeight: isCentered && '100%',
     width: 'auto',
@@ -70,51 +64,11 @@ const getStyle = ({
     flexDirection: 'column',
     width: '100%',
     pointerEvents: 'auto',
-    backgroundColor,
+    backgroundColor: 'white',
     backgroundClip: 'padding-box',
     outline: 0,
     display: 'flex',
-    boxSizing: 'border-box',
-    borderRadius: `${borderRadius}px`
-  },
-  header: {
-    display: 'flex',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    borderRadius: `${borderRadius}px ${borderRadius}px 0 0`,
-    borderBottom: `1px solid ${borderColor}`
-  },
-  headerContent: {
-    flex: 'auto',
-    padding: '1em'
-  },
-  btnClose: {
-    display: 'flex',
-    flex: 'none',
-    padding: '1em',
-    border: 'none',
-    lineHeight: 1.5,
-    outline: 0,
-    cursor: 'pointer',
-    borderTopRightRadius: `${borderRadius}px`
-  },
-  body: {
-    padding: '1em',
-    maxHeight: 'calc(100% - 9rem)',
-    backgroundColor: 'white',
-    borderBottomLeftRadius: `${borderRadius}px`,
-    borderBottomRightRadius: `${borderRadius}px`
-  },
-  footer: {
-    padding: '1em',
-    display: 'flex',
-    backgroundColor: 'white',
-    borderTop: `1px solid ${borderColor}`,
-    borderRadius: `0 0 ${borderRadius}px ${borderRadius}px`,
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    alignItems: 'center',
-    justifyContent: 'flex-end'
+    boxSizing: 'border-box'
   }
 })
 
@@ -122,31 +76,19 @@ const propTypes = {
   isOpen: PropTypes.bool,
   autoFocus: PropTypes.bool,
   isRequired: PropTypes.bool,
-  header: PropTypes.node,
   role: PropTypes.string,
   onEnter: PropTypes.func,
   onExit: PropTypes.func,
   onOpened: PropTypes.func,
   onClosed: PropTypes.func,
-  body: PropTypes.node.isRequired,
-  footer: PropTypes.node,
-  closeButton: PropTypes.func,
   zIndex: PropTypes.number,
   onClickOutside: PropTypes.func,
+  children: PropTypes.node.isRequired,
   transition: PropTypes.shape({
     duration: 300,
     onEntered: PropTypes.func,
     onExited: PropTypes.func
-  }),
-  /* eslint-disable react/no-unused-prop-types */
-  styling: PropTypes.shape({
-    borderRadius: PropTypes.number,
-    borderColor: PropTypes.string,
-    maxWidth: PropTypes.number,
-    isCentered: PropTypes.bool,
-    backgroundColor: PropTypes.string
   })
-  /* eslint-enable react/no-unused-prop-types */
 }
 
 const defaultProps = {
@@ -162,12 +104,6 @@ const defaultProps = {
     duration: 300,
     onExited: noop,
     onEntered: noop
-  },
-  styling: {
-    borderRadius: 0,
-    borderColor: '#f0f0f0',
-    backgroundColor: 'white',
-    maxWidth: 500
   },
   isCentered: true
 }
@@ -301,15 +237,6 @@ class Modal extends React.Component {
   }
 
   renderModalDialog = (style) => {
-    const {
-      header,
-      isRequired,
-      onClosed,
-      body,
-      footer,
-      closeButton
-    } = this.props
-
     return (
       <div
         style={style.dialog}
@@ -322,26 +249,7 @@ class Modal extends React.Component {
             this.content = c
           }}
           style={style.content}>
-          <div style={style.header}>
-            <div style={style.headerContent}>
-              {header}
-            </div>
-            {(!isRequired && onClosed) && closeButton ? closeButton(onClosed) : (
-              <button
-                style={style.btnClose}
-                onClick={onClosed}>
-                ✕
-              </button>
-            )}
-          </div>
-          <div style={style.body}>
-            {body}
-          </div>
-          {footer && (
-            <div style={style.footer}>
-              {footer}
-            </div>
-          )}
+          {this.props.children}
         </div>
       </div>
     )
