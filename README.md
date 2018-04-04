@@ -5,8 +5,8 @@ React Modal Construction Kit
 
 A highly extensible Modal library. 
 
-* `Modal`
-* `Overlay`
+* [`Modal`](#modal)
+* [`Overlay`](#overlay)
 * `Portal`
 
 ## Demo

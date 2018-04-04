@@ -90,7 +90,9 @@ export default class Modal extends React.Component {
     transitionDuration: PropTypes.number,
     className: PropTypes.string,
     dialogClassName: PropTypes.string,
-    contentClassName: PropTypes.string
+    contentClassName: PropTypes.string,
+    // eslint-disable-next-line react/no-unused-prop-types
+    isCentered: PropTypes.bool
   }
 
   static defaultProps = {
