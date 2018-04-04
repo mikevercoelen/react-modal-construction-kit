@@ -97,7 +97,7 @@ The modal component is a fully customizable modal, requires no styling and is al
 | `isRequired` | boolean | false | If enabled, the Modal's close button will not show and keyDown @ `escape` will not close the modal |
 | `autoFocus` | boolean | undefined | autofocus the component on mount |
 | `zIndex` | number | 750 | z-index value |
-| `role` | string | 'dialog' | HTML5 `role` |
+| `role` | string | `"dialog"` | HTML5 `role` |
 | `body` | React Node | undefined | The body of the modal |
 | `header` | React Node | undefined | The header of the modal |
 | `footer` | React Node | undefined | The footer of the modal |
@@ -112,10 +112,10 @@ The modal component is a fully customizable modal, requires no styling and is al
 | `transition.onExited` | function(node) | undefined | - |
 | `styling` | object | default styles | If you want to customize the look and feel, you need to change the values in this object |
 | `styling.borderRadius` | number | 0 | Border radius |
-| `styling.borderColor` | string | #fafafa | The color of the border, that devides the content, footer and header |
+| `styling.borderColor` | string | `"#fafafa"` | The color of the border, that devides the content, footer and header |
 | `styling.maxWidth` | number | 500 | Max width of the dialog |
 | `styling.isCentered` | boolean | true | Set to false if you don't want the modal to be centered by default |
-| `styling.backgroundColor` | string | white | Set the background color of the dialog |
+| `styling.backgroundColor` | string | `"white"` | Set the background color of the dialog |
 
 ## Overlay
 The Modal component does not have an overlay by default, the reason for this is: what if you have multiple modals open? You should only have ONE overlay. It's animated and also requires no styling, it just works ;)
@@ -130,7 +130,7 @@ import { Overlay } from 'react-modal-construction-kit'
 | `zIndex` | number | 500 | z-index value |
 | `transitionDuration` | number | 150 | The duration of the transition |
 | `opacity` | number | 0.7 | The opacity value when the overlay is fully visible |
-| `backgroundColor` | string | black | The background color |
+| `backgroundColor` | string | `"black"` | The background color |
 
 # License
 
