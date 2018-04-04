@@ -1,6 +1,6 @@
 {
   "name": "react-modal-construction-kit",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "description": "A flexible Modal component kit for React",
   "main": "./lib/index.js",
   "module": "./es/index.js",
@@ -21,7 +21,6 @@
     "clean": "rimraf dist lib es dist-examples",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "prepush": "npm run deploy",
     "precommit": "lint-staged",
     "prepublishOnly": "npm run lint:fix && npm run test:cov && npm run clean && npm run build && npm run deploy",
     "test": "cross-env NODE_ENV=test jest --runInBand",

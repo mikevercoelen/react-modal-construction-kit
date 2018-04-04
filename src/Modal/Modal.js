@@ -90,7 +90,9 @@ export default class Modal extends React.Component {
     transitionDuration: PropTypes.number,
     className: PropTypes.string,
     dialogClassName: PropTypes.string,
-    contentClassName: PropTypes.string
+    contentClassName: PropTypes.string,
+    // eslint-disable-next-line react/no-unused-prop-types
+    isCentered: PropTypes.bool
   }
 
   static defaultProps = {
@@ -252,7 +254,8 @@ export default class Modal extends React.Component {
       children,
       className,
       dialogClassName,
-      contentClassName
+      contentClassName,
+      isRequired
     } = this.props
 
     const style = getStyle(this.props)
@@ -267,7 +270,7 @@ export default class Modal extends React.Component {
           in={isOpen}>
           {state => (
             <div
-              onClick={this.handleClick}
+              onClick={isRequired ? this.handleClick : null}
               tabIndex='-1'
               role={role}
               onKeyUp={this.handleEscape}
