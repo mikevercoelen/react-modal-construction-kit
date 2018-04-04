@@ -1,15 +1,17 @@
 [![NPM](https://img.shields.io/npm/v/react-modal-construction-kit.svg)](https://www.npmjs.com/package/react-modal-construction-kit)
 
-React-Modal-Construction-Kit
+React Modal Construction Kit
 ============
 
-A high quality Modal and Overlay component, fully animated and customizable. No styling required ;) Its rendered by using React 16's `createPortal`.
+A highly extensible Modal library. 
+
+* `Modal`
+* `Overlay`
+* `Portal`
 
 ## Demo
 
-**NOTE**: It's ugly, yes (because it's fully customizable)
-
-Demo: [mikevercoelen.github.io/react-modal-construction-kit](http://mikevercoelen.github.io/react-modal-construction-kit/)
+[mikevercoelen.github.io/react-modal-construction-kit](http://mikevercoelen.github.io/react-modal-construction-kit/)
 
 ## Installation
 
@@ -34,12 +36,6 @@ export default class App extends Component {
     })
   }
 
-  onModalClosed = () => {
-    this.setState({
-      isModalVisible: false
-    })
-  }
-
   close = () => {
     this.setState({ isModalVisible: false })
   }
@@ -51,7 +47,7 @@ export default class App extends Component {
       <div>
         <Modal
           onClickOutside={this.close}
-          onClosed={this.onModalClosed}
+          onClosed={this.close}
           isOpen={isModalVisible}>
           <p>
             A super minimal Modal
