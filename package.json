@@ -18,17 +18,18 @@
     "build:umd": "cross-env NODE_ENV=development webpack --env.development ./src/index.js --output-filename=react-modal-construction-kit.js",
     "build:umd:min": "cross-env NODE_ENV=production webpack --env.production ./src/index.js --output-filename=react-modal-construction-kit.min.js",
     "dev": "npm-watch",
-    "clean": "rimraf dist lib es dist-example",
+    "clean": "rimraf dist lib es dist-examples",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
+    "prepush": "npm run deploy",
     "precommit": "lint-staged",
     "prepublishOnly": "npm run lint:fix && npm run test:cov && npm run clean && npm run build && npm run deploy",
     "test": "cross-env NODE_ENV=test jest --runInBand",
     "test:watch": "npm test -- --watch",
     "test:cov": "npm run test -- --coverage",
-    "example": "cross-env NODE_ENV=development webpack-dev-server --config=./example/webpack.config.js",
-    "example:build": "cross-env NODE_ENV=production webpack --config=./example/webpack.config.js",
-    "deploy": "npm run example:build && gulp deploy"
+    "examples": "cross-env NODE_ENV=development webpack-dev-server --config=./examples/webpack.config.js",
+    "examples:build": "cross-env NODE_ENV=production webpack --config=./examples/webpack.config.js",
+    "deploy": "npm run examples:build && gulp deploy"
   },
   "watch": {
     "build": "src/**/*.js"
