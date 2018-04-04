@@ -9,7 +9,7 @@ A high quality Modal and Overlay component, fully animated and customizable. No 
 
 **NOTE**: It's ugly, yes (because it's fully customizable)
 
-Live demo: [mikevercoelen.github.io/react-modal-construction-kit](http://mikevercoelen.github.io/react-modal-construction-kit/)
+Demo: [mikevercoelen.github.io/react-modal-construction-kit](http://mikevercoelen.github.io/react-modal-construction-kit/)
 
 ## Installation
 
