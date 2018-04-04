@@ -1,87 +1,173 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 import Portal from '../Portal/Portal'
-import Fade from '../Fade/Fade'
+import { Transition } from 'react-transition-group'
 
 import {
   getOriginalBodyPadding,
   conditionallyUpdateScrollbar,
   setScrollbarWidth,
-  mapToCssModules,
-  omit,
   noop
 } from '../utils'
 
-const styles = {
-  component: 'rmck-modal',
-  dialog: 'rmck-modal__dialog',
-  modalOpen: 'rmck-modal-open', // no bem (this class @ body when modal is open)
-  modalContent: 'rmck-modal__content',
-  header: 'rmck-modal__header',
-  headerInner: 'rmck-modal__header-inner',
-  body: 'rmck-modal__body',
-  footer: 'rmck-modal__footer',
-  fade: 'rmck-modal__fade',
-  show: 'rmck-modal__show',
-  btnClose: 'rmck-modal__btn-close',
-  btnCloseInner: 'rmck-modal__btn-close-inner'
-}
+export const getTransitionStyles = () => ({
+  exited: {
+    display: 'none'
+  },
+  entering: {
+    opacity: 0.01,
+    transform: 'scale(1.05)'
+  },
+  entered: {
+    opacity: 1,
+    transform: 'none'
+  },
+  exiting: {
+    opacity: 0.01,
+    transform: 'scale(0.90)'
+  }
+})
 
-const FadePropTypes = PropTypes.shape(Fade.propTypes)
+const getStyle = ({
+  zIndex,
+  isCentered,
+  transition,
+  styling: {
+    borderRadius,
+    borderColor,
+    maxWidth,
+    backgroundColor
+  }
+}) => ({
+  component: {
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex,
+    outline: 0,
+    transition: `opacity ${transition.duration / 2}ms linear, transform ${transition.duration}ms ease-out`
+  },
+  dialog: {
+    display: 'flex',
+    alignItems: 'center',
+    position: 'relative',
+    maxWidth: `${maxWidth}px`,
+    margin: (isCentered ? '0 auto' : '1.75rem auto'),
+    minHeight: isCentered && '100%',
+    width: 'auto',
+    boxSizing: 'border-box',
+    pointerEvents: 'none'
+  },
+  content: {
+    position: 'relative',
+    WebkitBoxOrient: 'vertical',
+    WebkitBoxDirection: 'normal',
+    MsFlexDirection: 'column',
+    flexDirection: 'column',
+    width: '100%',
+    pointerEvents: 'auto',
+    backgroundColor,
+    backgroundClip: 'padding-box',
+    outline: 0,
+    display: 'flex',
+    boxSizing: 'border-box',
+    borderRadius: `${borderRadius}px`
+  },
+  header: {
+    display: 'flex',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    borderRadius: `${borderRadius}px ${borderRadius}px 0 0`,
+    borderBottom: `1px solid ${borderColor}`
+  },
+  headerContent: {
+    flex: 'auto',
+    padding: '1em'
+  },
+  btnClose: {
+    display: 'flex',
+    flex: 'none',
+    padding: '1em',
+    border: 'none',
+    lineHeight: 1.5,
+    outline: 0,
+    cursor: 'pointer',
+    borderTopRightRadius: `${borderRadius}px`
+  },
+  body: {
+    padding: '1em',
+    maxHeight: 'calc(100% - 9rem)',
+    backgroundColor: 'white',
+    borderBottomLeftRadius: `${borderRadius}px`,
+    borderBottomRightRadius: `${borderRadius}px`
+  },
+  footer: {
+    padding: '1em',
+    display: 'flex',
+    backgroundColor: 'white',
+    borderTop: `1px solid ${borderColor}`,
+    borderRadius: `0 0 ${borderRadius}px ${borderRadius}px`,
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    alignItems: 'center',
+    justifyContent: 'flex-end'
+  }
+})
 
 const propTypes = {
   isOpen: PropTypes.bool,
   autoFocus: PropTypes.bool,
-  size: PropTypes.string,
-  toggle: PropTypes.func,
-  isFirst: PropTypes.bool, // TODO: handle isFirst
   isRequired: PropTypes.bool,
   header: PropTypes.node,
   role: PropTypes.string,
-  labelledBy: PropTypes.string,
   onEnter: PropTypes.func,
   onExit: PropTypes.func,
   onOpened: PropTypes.func,
   onClosed: PropTypes.func,
-  body: PropTypes.node,
+  body: PropTypes.node.isRequired,
   footer: PropTypes.node,
-  className: PropTypes.string,
-  wrapClassName: PropTypes.string,
-  modalClassName: PropTypes.string,
-  contentClassName: PropTypes.string,
-  fade: PropTypes.bool,
-  cssModule: PropTypes.object,
-  btnCloseInner: PropTypes.node,
-  zIndex: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string
-  ]),
-  modalTransition: FadePropTypes
+  closeButton: PropTypes.func,
+  zIndex: PropTypes.number,
+  transition: PropTypes.shape({
+    duration: 300,
+    onEntered: PropTypes.func,
+    onExited: PropTypes.func
+  }),
+  /* eslint-disable react/no-unused-prop-types */
+  styling: PropTypes.shape({
+    borderRadius: PropTypes.number,
+    borderColor: PropTypes.string,
+    maxWidth: PropTypes.number,
+    isCentered: PropTypes.bool,
+    backgroundColor: PropTypes.string
+  })
+  /* eslint-enable react/no-unused-prop-types */
 }
-
-const propsToOmit = Object.keys(propTypes)
 
 const defaultProps = {
   isOpen: false,
   autoFocus: true,
   role: 'dialog',
-  zIndex: 1050,
-  fade: true,
+  zIndex: 750,
   onOpened: noop,
   isRequired: false,
   onClosed: noop,
-  modalTransition: {
-    timeout: 300
+  transition: {
+    duration: 300,
+    onExited: noop,
+    onEntered: noop
   },
-  cssModule: {
-    'modal': styles.component,
-    'modal-dialog': styles.dialog,
-    'modal-open': styles.modalOpen,
-    'modal-content': styles.modalContent,
-    'fade': styles.fade,
-    'show': styles.show
-  }
+  styling: {
+    borderRadius: 0,
+    borderColor: '#f0f0f0',
+    backgroundColor: 'white',
+    maxWidth: 500
+  },
+  isCentered: true
 }
 
 class Modal extends React.Component {
@@ -143,14 +229,23 @@ class Modal extends React.Component {
   }
 
   onOpened = (node, isAppearing) => {
-    this.props.onOpened();
-    (this.props.modalTransition.onEntered || noop)(node, isAppearing)
+    const {
+      onOpened,
+      transition
+    } = this.props
+
+    onOpened()
+    transition.onEntered(node, isAppearing)
   }
 
   onClosed = (node) => {
-    // so all methods get called before it is unmounted
-    this.props.onClosed();
-    (this.props.modalTransition.onExited || noop)(node)
+    const {
+      onClosed,
+      transition
+    } = this.props
+
+    onClosed()
+    transition.onExited(node)
     this.destroy()
 
     if (this._isMounted) {
@@ -183,12 +278,9 @@ class Modal extends React.Component {
 
     document.body.appendChild(this.element)
 
-    if (!this.bodyClassAdded) {
-      document.body.className = classNames(
-        document.body.className,
-        mapToCssModules('modal-open', this.props.cssModule)
-      )
-      this.bodyClassAdded = true
+    if (!this._bodyStyleAdded) {
+      document.body.style.overflow = 'hidden'
+      this._bodyStyleAdded = true
     }
   }
 
@@ -198,72 +290,49 @@ class Modal extends React.Component {
       this.element = null
     }
 
-    if (this.bodyClassAdded) {
-      const modalOpenClassName = mapToCssModules('modal-open', this.props.cssModule)
-      // Use regex to prevent matching `modal-open` as part of a different class, e.g. `my-modal-opened`
-      const modalOpenClassNameRegex = new RegExp(`(^| )${modalOpenClassName}( |$)`)
-      document.body.className = document.body.className.replace(modalOpenClassNameRegex, ' ').trim()
-      this.bodyClassAdded = false
+    if (this._bodyStyleAdded) {
+      document.body.style.overflow = null
+      this._bodyStyleAdded = false
     }
 
     setScrollbarWidth(this.originalBodyPadding)
   }
 
-  renderModalDialog () {
+  renderModalDialog = (style) => {
     const {
       header,
       isRequired,
       onClosed,
       body,
       footer,
-      className,
-      size,
-      contentClassName,
-      cssModule,
-      btnCloseInner
+      closeButton
     } = this.props
-
-    const attributes = omit(this.props, propsToOmit)
-    const dialogBaseClass = 'modal-dialog'
 
     return (
       <div
-        {...attributes}
-        className={mapToCssModules(classNames(dialogBaseClass, className, {
-          [`modal-${size}`]: size
-        }), cssModule)}
+        style={style.dialog}
         role='document'
         ref={(c) => {
           this.dialog = c
-        }}
-      >
-        <div
-          className={mapToCssModules(
-            classNames('modal-content', contentClassName),
-            cssModule
-          )}
-        >
-          <div className={styles.header}>
-            <div className={styles.headerInner}>
+        }}>
+        <div style={style.content}>
+          <div style={style.header}>
+            <div style={style.headerContent}>
               {header}
             </div>
-            {(!isRequired && onClosed) && (
+            {(!isRequired && onClosed) && closeButton ? closeButton(onClosed) : (
               <button
-                className={styles.btnClose}
+                style={style.btnClose}
                 onClick={onClosed}>
-                {btnCloseInner || (
-                  <div className={styles.btnCloseInner}>
-                    ✕
-                  </div>
-                )}
+                ✕
               </button>
             )}
           </div>
-          <div className={styles.body}>
+          <div style={style.body}>
             {body}
           </div>
           {footer && (
-            <div className={styles.footer}>
+            <div style={style.footer}>
               {footer}
             </div>
           )}
@@ -278,45 +347,34 @@ class Modal extends React.Component {
     }
 
     const {
-      wrapClassName,
-      modalClassName,
-      cssModule,
       isOpen,
       role,
-      labelledBy
+      transition
     } = this.props
 
-    const modalAttributes = {
-      onKeyUp: this.handleEscape,
-      style: { display: 'block' },
-      'aria-labelledby': labelledBy,
-      role,
-      tabIndex: '-1'
-    }
-
-    const hasTransition = this.props.fade
-    const modalTransition = {
-      ...Fade.defaultProps,
-      ...this.props.modalTransition,
-      baseClass: hasTransition ? this.props.modalTransition.baseClass : '',
-      timeout: hasTransition ? this.props.modalTransition.timeout : 0
-    }
+    const style = getStyle(this.props)
 
     return (
       <Portal node={this.element}>
-        <div className={mapToCssModules(wrapClassName)}>
-          <Fade
-            {...modalAttributes}
-            {...modalTransition}
-            in={isOpen}
-            onEntered={this.onOpened}
-            onExited={this.onClosed}
-            cssModule={cssModule}
-            className={mapToCssModules(classNames('modal', modalClassName), cssModule)}
-          >
-            {this.renderModalDialog()}
-          </Fade>
-        </div>
+        <Transition
+          appear
+          onEntered={this.onOpened}
+          onExited={this.onClosed}
+          timeout={transition.duration}
+          in={isOpen}>
+          {state => (
+            <div
+              tabIndex='-1'
+              role={role}
+              onKeyUp={this.handleEscape}
+              style={{
+                ...style.component,
+                ...getTransitionStyles()[state]
+              }}>
+              {this.renderModalDialog(style)}
+            </div>
+          )}
+        </Transition>
       </Portal>
     )
   }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, Overlay } from '../src/index'
-import './index.scss'
+import { Modal, Overlay } from '../../src/index'
 
 export default class App extends Component {
   state = {
@@ -29,10 +28,10 @@ export default class App extends Component {
     return (
       <div>
         <Modal
-          btnCloseInner={(
-            <div>
-              X
-            </div>
+          closeButton={(onClosed) => (
+            <button onClick={onClosed}>
+              Close it
+            </button>
           )}
           header={(
             <h4>

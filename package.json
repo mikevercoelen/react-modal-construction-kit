@@ -26,7 +26,7 @@
     "test": "cross-env NODE_ENV=test jest --runInBand",
     "test:watch": "npm test -- --watch",
     "test:cov": "npm run test -- --coverage",
-    "example": "cross-env NODE_ENV=example webpack-dev-server --env.development"
+    "example": "cross-env NODE_ENV=example webpack-dev-server --env.development --config=./example/webpack.config.js"
   },
   "watch": {
     "build": "src/**/*.js"

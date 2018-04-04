@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import Portal from '../Portal/Portal'
 import { Transition } from 'react-transition-group'
 
-const getDefaultStyle = transitionDuration => ({
+const getDefaultStyle = (transitionDuration, backgroundColor) => ({
   position: 'fixed',
   top: 0,
   right: 0,
   bottom: 0,
   left: 0,
-  backgroundColor: 'black',
+  backgroundColor,
   willChange: 'opacity',
   transition: `opacity ${transitionDuration}ms ease-in-out`
 })
@@ -33,10 +33,11 @@ const Overlay = ({
   isVisible,
   zIndex,
   transitionDuration,
-  opacity
+  opacity,
+  backgroundColor
 }) => {
   const style = {
-    ...getDefaultStyle(transitionDuration),
+    ...getDefaultStyle(transitionDuration, backgroundColor),
     zIndex: zIndex || 500
   }
 
@@ -61,13 +62,15 @@ Overlay.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   transitionDuration: PropTypes.number,
   zIndex: PropTypes.number,
-  opacity: PropTypes.number
+  opacity: PropTypes.number,
+  backgroundColor: PropTypes.string
 }
 
 Overlay.defaultProps = {
   transitionDuration: 150,
   zIndex: 500,
-  opacity: 0.7
+  opacity: 0.7,
+  backgroundColor: 'black'
 }
 
 export default Overlay
