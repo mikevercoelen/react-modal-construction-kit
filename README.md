@@ -71,22 +71,22 @@ The modal component is a fully customizable modal, requires no styling and is al
 | Property | Type | Default | Description |
 |:---|:---|:---|:---|
 | `isOpen` | boolean | false | Open or close modal's state |
-| `isRequired` | boolean | false | If enabled, `escape` keydown will not trigger close, and `onClickOutside` will not trigger. Use this if the Modal is "important". |
 | `autoFocus` | boolean | - | autofocus the component on mount |
 | `zIndex` | number | 750 | z-index value |
 | `role` | string | `"dialog"` | HTML5 `role` |
 | `children` | React Node | - | The content of the modal |
 | `onOpened` | function | - | Called on when the Transitions triggers 'onOpened' |
-| `onClickOutside` | function() | - | Called when the user clicks outside the modal |
 | `onClosed` | function | - | Called on when the Transitions triggers 'onClosed' |
+| `onClickOutside` | function() | - | Called when the user clicks outside the modal, this should trigger the same function as `onClosed` |
 | `onEnter` | function | - | Called on `componentDidMount` |
 | `onExit` | function | - | Called on `componentWillUnmount` | 
-| `transitionDuration` | number | 300 | Duration of the animation |
 | `onEntered` | function(node, isAppearing) | - | - |
 | `onExited` | function(node) | - | - |
 | `className` | string | - | Adds a class names to component root |
 | `dialogClassName` | string | - | Adds a class name to dialog |
 | `contentClassName` | string | - | Adds a class name to content |
+| `hasEscapeClose` | boolean | true | If enabled, `escape` keydown will onClosed |
+| `transitionDuration` | number | 300 | Duration of the animation |
 
 ## Overlay
 The Modal component does not have an overlay by default, the reason for this is: what if you have multiple modals open? You should only have ONE overlay. It's animated and also requires no styling, it just works ;)

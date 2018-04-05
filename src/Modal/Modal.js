@@ -76,7 +76,7 @@ export default class Modal extends React.Component {
   static propTypes = {
     isOpen: PropTypes.bool,
     autoFocus: PropTypes.bool,
-    isRequired: PropTypes.bool,
+    hasEscapeClose: PropTypes.bool,
     role: PropTypes.string,
     onEnter: PropTypes.func,
     onExit: PropTypes.func,
@@ -101,7 +101,7 @@ export default class Modal extends React.Component {
     role: 'dialog',
     zIndex: 750,
     onOpened: noop,
-    isRequired: false,
+    hasEscapeClose: true,
     onClosed: noop,
     onClickOutside: noop,
     transitionDuration: 300,
@@ -134,6 +134,8 @@ export default class Modal extends React.Component {
       this.setFocus()
     }
 
+    window.addEventListener('keydown', this.handleEscape, true)
+
     this._isMounted = true
   }
 
@@ -163,6 +165,8 @@ export default class Modal extends React.Component {
     if (this.state.isOpen) {
       this.destroy()
     }
+
+    window.removeEventListener('keydown', this.handleEscape, true)
 
     this._isMounted = false
   }
@@ -199,9 +203,9 @@ export default class Modal extends React.Component {
   }
 
   handleEscape = (e) => {
-    const { isOpen, isRequired, onClosed } = this.props
+    const { isOpen, hasEscapeClose, onClosed } = this.props
 
-    if (isOpen && !isRequired && e.keyCode === 27 && onClosed) {
+    if (isOpen && hasEscapeClose && e.keyCode === 27 && onClosed) {
       onClosed()
     }
   }
@@ -239,7 +243,10 @@ export default class Modal extends React.Component {
 
   handleClick = (e) => {
     const hasClickedOutside = !this.contentRef.contains(e.target)
-    hasClickedOutside && this.props.onClickOutside()
+
+    if (hasClickedOutside) {
+      this.props.onClickOutside(e)
+    }
   }
 
   render () {
@@ -255,7 +262,7 @@ export default class Modal extends React.Component {
       className,
       dialogClassName,
       contentClassName,
-      isRequired
+      onClickOutside
     } = this.props
 
     const style = getStyle(this.props)
@@ -270,10 +277,9 @@ export default class Modal extends React.Component {
           in={isOpen}>
           {state => (
             <div
-              onClick={isRequired ? this.handleClick : null}
+              onClick={onClickOutside ? this.handleClick : null}
               tabIndex='-1'
               role={role}
-              onKeyUp={this.handleEscape}
               className={className}
               style={{
                 ...style.component,
