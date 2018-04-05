@@ -77,7 +77,6 @@ The modal component is a fully customizable modal, requires no styling and is al
 | `children` | React Node | - | The content of the modal |
 | `onOpened` | function | - | Called on when the Transitions triggers 'onOpened' |
 | `onClosed` | function | - | Called on when the Transitions triggers 'onClosed' |
-| `onClickOutside` | function() | - | Called when the user clicks outside the modal, this should trigger the same function as `onClosed` |
 | `onEnter` | function | - | Called on `componentDidMount` |
 | `onExit` | function | - | Called on `componentWillUnmount` | 
 | `onEntered` | function(node, isAppearing) | - | - |
@@ -85,7 +84,8 @@ The modal component is a fully customizable modal, requires no styling and is al
 | `className` | string | - | Adds a class names to component root |
 | `dialogClassName` | string | - | Adds a class name to dialog |
 | `contentClassName` | string | - | Adds a class name to content |
-| `hasEscapeClose` | boolean | true | If enabled, `escape` keydown will onClosed |
+| `hasEscapeClose` | boolean | true | If enabled, `escape` keydown will trigger `onClosed` |
+| `hasOutsideClickClose` | boolean | true | If enabled, clicking outside of the modal (i.e. on the overlay) will trigger `onClosed` |
 | `transitionDuration` | number | 300 | Duration of the animation |
 
 ## Overlay
@@ -99,9 +99,9 @@ import { Overlay } from 'react-modal-construction-kit'
 |:---|:---|:---|:---|
 | `isVisible` | boolean | false | Shows or hides the overlay |
 | `zIndex` | number | 500 | z-index value |
-| `transitionDuration` | number | 150 | The duration of the transition |
+| `className` | string | - | A className applied to the overlay |
 | `opacity` | number | 0.7 | The opacity value when the overlay is fully visible |
-| `backgroundColor` | string | `"black"` | The background color |
+| `transitionDuration` | number | 150 | The duration of the transition |
 | `onClick` | function(event) | - | onClick handler, when using a modal you don't need this, use `Modal.onClickOutside` |
 
 # License

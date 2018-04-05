@@ -77,13 +77,13 @@ export default class Modal extends React.Component {
     isOpen: PropTypes.bool,
     autoFocus: PropTypes.bool,
     hasEscapeClose: PropTypes.bool,
+    hasOutsideClickClose: PropTypes.bool,
     role: PropTypes.string,
     onEnter: PropTypes.func,
     onExit: PropTypes.func,
     onOpened: PropTypes.func,
     onClosed: PropTypes.func,
     zIndex: PropTypes.number,
-    onClickOutside: PropTypes.func,
     children: PropTypes.node.isRequired,
     onEntered: PropTypes.func,
     onExited: PropTypes.func,
@@ -102,8 +102,8 @@ export default class Modal extends React.Component {
     zIndex: 750,
     onOpened: noop,
     hasEscapeClose: true,
+    hasOutsideClickClose: true,
     onClosed: noop,
-    onClickOutside: noop,
     transitionDuration: 300,
     onEntered: noop,
     onExited: noop,
@@ -245,7 +245,7 @@ export default class Modal extends React.Component {
     const hasClickedOutside = !this.contentRef.contains(e.target)
 
     if (hasClickedOutside) {
-      this.props.onClickOutside(e)
+      this.props.onClosed()
     }
   }
 
@@ -262,7 +262,7 @@ export default class Modal extends React.Component {
       className,
       dialogClassName,
       contentClassName,
-      onClickOutside
+      hasOutsideClickClose
     } = this.props
 
     const style = getStyle(this.props)
@@ -277,7 +277,7 @@ export default class Modal extends React.Component {
           in={isOpen}>
           {state => (
             <div
-              onClick={onClickOutside ? this.handleClick : null}
+              onClick={hasOutsideClickClose ? this.handleClick : null}
               tabIndex='-1'
               role={role}
               className={className}
