@@ -1,5 +1,4 @@
 const webpack = require('webpack')
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 const env = process.env.NODE_ENV
 
@@ -55,7 +54,6 @@ const config = {
     libraryTarget: 'umd'
   },
   plugins: [
-    new LodashModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(env)
     })
